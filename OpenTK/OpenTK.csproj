@@ -58,9 +58,11 @@
     <Compile Include="MiniProjects\Asteroids\Asteroid1.cs" />
     <Compile Include="MiniProjects\GameProject.cs" />
     <Compile Include="MiniProjects\SphereCube\Cube.cs" />
+    <Compile Include="MiniProjects\SphereCube\TrianglesCube.cs" />
     <Compile Include="MiniProjects\SphereCube\Sphere.cs" />
     <Compile Include="MiniProjects\SphereCube\SphereCube.cs" />
     <Compile Include="MiniProjects\Triangle\Triangle.cs" />
+    <Compile Include="Objects\Shapes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -12,7 +12,7 @@ namespace OpenTK
 {
 	class Game : GameWindow
 	{
-		static readonly GameProject Project = new SphereCube();
+		static readonly GameProject Project = new TrianglesCube();
 
 		public Game()
 			: base(Project.WIDTH, Project.HEIGHT, Project.MODE, Project.TITLE)

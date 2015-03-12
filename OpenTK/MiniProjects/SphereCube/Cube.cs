@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using OpenTK.Graphics;
+using OpenTK.Objects;
 
 namespace OpenTK.MiniProjects.SphereCube
 {
 	public class Cube : GameProject
 	{
-		private float[] sin, cos;
 		private List<float> x, y, z;
 		private const float SIDE_LENGTH = 1;
-		private const int FULL_CIRCLE = 360;
 		private const int NUM_POINTS = 10;
 		private const float POINT_SQUARE_SIZE = 0.01f;
 
@@ -78,22 +77,10 @@ namespace OpenTK.MiniProjects.SphereCube
 
 			for (int i = 0; i < x.Count; i++)
 			{
-				Square(x[i], y[i], z[i]);
+				Shapes.DrawSquare(x[i], y[i], z[i], POINT_SQUARE_SIZE);
 			}
 
 			gw.SwapBuffers();
-		}
-
-		public void Square(float midX, float midY, float midZ)
-		{
-			GL.Begin(BeginMode.Quads);
-
-			GL.Color3(1.0f, 1.0f, 1.0f); GL.Vertex3(midX - POINT_SQUARE_SIZE, midY - POINT_SQUARE_SIZE, 4.0f + midZ);
-			GL.Color3(1.0f, 1.0f, 1.0f); GL.Vertex3(midX + POINT_SQUARE_SIZE, midY - POINT_SQUARE_SIZE, 4.0f + midZ);
-			GL.Color3(1.0f, 1.0f, 1.0f); GL.Vertex3(midX + POINT_SQUARE_SIZE, midY + POINT_SQUARE_SIZE, 4.0f + midZ);
-			GL.Color3(1.0f, 1.0f, 1.0f); GL.Vertex3(midX - POINT_SQUARE_SIZE, midY + POINT_SQUARE_SIZE, 4.0f + midZ);
-
-			GL.End();
 		}
 	}
 }

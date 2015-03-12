@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using OpenTK.Graphics;
 using OpenTK.Input;
+using OpenTK.Objects;
 
 namespace OpenTK.MiniProjects.SphereCube
 {
@@ -111,7 +112,7 @@ namespace OpenTK.MiniProjects.SphereCube
 					CalculateDeltas(i);
 				}
 
-				Square(x[i], y[i], z[i]);
+				Shapes.DrawSquare(x[i], y[i], z[i], POINT_SQUARE_SIZE);
 			}
 
 			gw.SwapBuffers();
@@ -125,20 +126,6 @@ namespace OpenTK.MiniProjects.SphereCube
 					Transform = !Transform;
 					break;
 			}
-		}
-
-		public void Square(float midX, float midY, float midZ)
-		{
-			GL.Begin(BeginMode.LineLoop);
-
-			GL.Color3(1.0f, 1.0f, 1.0f);
-
-			GL.Vertex3(midX - POINT_SQUARE_SIZE, midY - POINT_SQUARE_SIZE, 4.0f + midZ);
-			GL.Vertex3(midX + POINT_SQUARE_SIZE, midY - POINT_SQUARE_SIZE, 4.0f + midZ);
-			GL.Vertex3(midX + POINT_SQUARE_SIZE, midY + POINT_SQUARE_SIZE, 4.0f + midZ);
-			GL.Vertex3(midX - POINT_SQUARE_SIZE, midY + POINT_SQUARE_SIZE, 4.0f + midZ);
-
-			GL.End();
 		}
 
 		void CalculateDeltas(int i)

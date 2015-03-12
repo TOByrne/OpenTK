@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using OpenTK.Graphics;
+using OpenTK.Objects;
 
 namespace OpenTK.MiniProjects.SphereCube
 {
@@ -9,7 +10,7 @@ namespace OpenTK.MiniProjects.SphereCube
 		private List<float> x, y, z;
 		private const float RADIUS = 1;
 		private const int FULL_CIRCLE = 360;
-		private const int NUM_POINTS = 50;
+		private const int NUM_POINTS = 20;
 		private const float POINT_SQUARE_SIZE = 0.01f;
 
 		private const float CIRCLE_ROTATE_SPEED = 0.5f;
@@ -64,22 +65,10 @@ namespace OpenTK.MiniProjects.SphereCube
 
 			for (int i = 0; i < x.Count; i++)
 			{
-				Square(x[i], y[i], z[i]);
+				Shapes.DrawCube(x[i], y[i], z[i], POINT_SQUARE_SIZE);
 			}
 
 			gw.SwapBuffers();
-		}
-
-		public void Square(float midX, float midY, float midZ)
-		{
-			GL.Begin(BeginMode.LineLoop);
-
-			GL.Color3(1.0f, 1.0f, 1.0f); GL.Vertex3(midX - POINT_SQUARE_SIZE, midY - POINT_SQUARE_SIZE, 4.0f + midZ);
-			GL.Color3(1.0f, 1.0f, 1.0f); GL.Vertex3(midX + POINT_SQUARE_SIZE, midY - POINT_SQUARE_SIZE, 4.0f + midZ);
-			GL.Color3(1.0f, 1.0f, 1.0f); GL.Vertex3(midX + POINT_SQUARE_SIZE, midY + POINT_SQUARE_SIZE, 4.0f + midZ);
-			GL.Color3(1.0f, 1.0f, 1.0f); GL.Vertex3(midX - POINT_SQUARE_SIZE, midY + POINT_SQUARE_SIZE, 4.0f + midZ);
-
-			GL.End();
 		}
 	}
 }
