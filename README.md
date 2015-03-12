@@ -3,7 +3,7 @@
 ## Getting Started
 You'll need to download OpenTK before any of this will work.  You can download from the OpenTK site here: http://www.opentk.com/
 
-Once you've installed the ToolKit, you can either repoint the OpenTK references in the solution or, as I did, copy the dlls into an easier-to-remember directory: 
+Once you've installed the ToolKit, you can either repoint the OpenTK references in the solution to the respective files in the OpenTK install directory (look for the Binaries folder) or, as I did, copy the dlls into an easier-to-remember directory: 
 C:\Projects\Libraries\OpenTK\*
 
 ## Examples
