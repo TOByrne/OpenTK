@@ -1,12 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK.MiniProjects.Asteroids
 {
-	public class Asteroid1
+	public class Asteroid1 : GameProject
 	{
+		public override void Init()
+		{
+
+			Initialized = true;
+		}
+
+		public override void OnRenderFrame(FrameEventArgs e, GameWindow gw)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
