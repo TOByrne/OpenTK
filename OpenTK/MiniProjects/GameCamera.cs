@@ -22,7 +22,7 @@ namespace OpenTK.MiniProjects
 
 		public Matrix4 GetViewMatrix()
 		{
-			Vector3 lookAt = new Vector3(0.0f, 0.0f, 0.0f);
+			var lookAt = new Vector3(0.0f, 0.0f, 0.0f);
 
 			return Matrix4.LookAt(Position, lookAt - Position, Vector3.UnitY);
 		}
@@ -30,7 +30,7 @@ namespace OpenTK.MiniProjects
 		public void LookLeft()
 		{
 			//	Actually Rotates the Camera Counter-Clockwise around the Y axis
-			Angle++;
+			Angle--;
 			if (Angle > 360) { Angle -= 360; }
 
 			SetNewPosition();
@@ -39,7 +39,7 @@ namespace OpenTK.MiniProjects
 		public void LookRight()
 		{
 			//	Actually Rotates the Camera Clockwise around the Y axis
-			Angle--;
+			Angle++;
 			if (Angle < 0) { Angle += 360; }
 
 			SetNewPosition();
@@ -68,7 +68,7 @@ namespace OpenTK.MiniProjects
 				Position.X.ToString("000.00000"),
 				Position.Y.ToString("000.00000"),
 				Position.Z.ToString("000.00000")
-				);
+			);
 
 			s += "\tAngle: " + Angle;
 

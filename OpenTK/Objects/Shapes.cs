@@ -1,6 +1,4 @@
-﻿
-using System;
-using OpenTK.Graphics;
+﻿using OpenTK.Graphics;
 
 namespace OpenTK.Objects
 {
@@ -21,14 +19,14 @@ namespace OpenTK.Objects
 			GL.End();
 		}
 
-		public static void DrawCube(float x, float y, float z, float length)
+		public static void DrawCube(float x, float y, float z, float length, float r = 1.0f, float g = 1.0f, float b = 1.0f)
 		{
 			var l = length/2;
 			GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
 
 			GL.Begin(BeginMode.Triangles);
 
-			GL.Color3(1.0f, 1.0f, 1.0f);
+			GL.Color3(r, g, b);
 
 			GL.Vertex3(x - l, y - l, z + 4 - l); GL.Vertex3(x - l, y - l, z + 4 + l); GL.Vertex3(x - l, y + l, z + 4 + l);
 			GL.Vertex3(x + l, y + l, z + 4 - l); GL.Vertex3(x - l, y - l, z + 4 - l); GL.Vertex3(x - l, y + l, z + 4 - l);

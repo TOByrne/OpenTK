@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
 using OpenTK.Graphics;
 using System;
-using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using EnableCap = OpenTK.Graphics.EnableCap;
 using GL = OpenTK.Graphics.GL;

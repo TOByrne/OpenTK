@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using OpenTK.Graphics;
+﻿using System.Linq;
 using System;
 using OpenTK.Input;
 using OpenTK.MiniProjects;
 using OpenTK.MiniProjects.ParticleFountain;
-using OpenTK.MiniProjects.SphereCube;
-using OpenTK.MiniProjects.Triangle;
 
 //	http://choorucode.com/2013/06/07/how-to-get-started-with-opentk-using-c-and-visual-studio/
 
@@ -71,7 +68,7 @@ namespace OpenTK
 				Project.Init();
 			}
 
-			using (Game game = new Game())
+			using (var game = new Game())
 			{
 				game.Run(30.0);
 			}
@@ -79,16 +76,10 @@ namespace OpenTK
 
 		private static void DeviceInfo()
 		{
-			var devices = new List<DisplayDevice>();
-
-			foreach (DisplayIndex index in Enum.GetValues(typeof (DisplayIndex)))
-			{
-				DisplayDevice device = DisplayDevice.GetDisplay(index);
-				if (device != null)
-				{
-					devices.Add(device);
-				}
-			}
+			var devices = Enum.GetValues(typeof (DisplayIndex))
+				.Cast<DisplayIndex>()
+				.Select(DisplayDevice.GetDisplay)
+				.Where(device => device != null).ToList();
 
 			Console.WriteLine(string.Format("There {0} {1} device{2}.",
 				devices.Count > 1 ? "are" : "is",
@@ -102,7 +93,7 @@ namespace OpenTK
 				Console.WriteLine(device.RefreshRate);
 				Console.WriteLine(device.BitsPerPixel);
 
-				foreach (DisplayResolution res in device.AvailableResolutions)
+				foreach (var res in device.AvailableResolutions)
 				{
 					Console.WriteLine(res);
 				}

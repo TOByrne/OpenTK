@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using OpenTK.Graphics;
 using OpenTK.Objects;
 
@@ -36,12 +35,12 @@ namespace OpenTK.MiniProjects.SphereCube
 
 		void CreatePointsTable()
 		{
-			float incAmt = SIDE_LENGTH/NUM_POINTS;
+			const float incAmt = SIDE_LENGTH/NUM_POINTS;
 
 			//	Do this for every side.
 
-			var min = SIDE_LENGTH / -2;
-			var max = SIDE_LENGTH / 2;
+			const float min = SIDE_LENGTH / -2;
+			const float max = SIDE_LENGTH / 2;
 
 			for (var i = min; i < max; i += incAmt)
 			{
@@ -65,7 +64,7 @@ namespace OpenTK.MiniProjects.SphereCube
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-			Matrix4 modelview = Matrix4.LookAt(Vector3.Zero, Vector3.UnitZ, Vector3.UnitY);
+			var modelview = Matrix4.LookAt(Vector3.Zero, Vector3.UnitZ, Vector3.UnitY);
 			GL.MatrixMode(MatrixMode.Modelview);
 			GL.LoadMatrix(ref modelview);
 
@@ -75,7 +74,7 @@ namespace OpenTK.MiniProjects.SphereCube
 			GL.Rotate(CUBE_ANGLE, new Vector3(0.0f, 0.1f, 0.1f));
 			GL.Translate(0.0f, 0.0f, -4.0f);
 
-			for (int i = 0; i < x.Count; i++)
+			for (var i = 0; i < x.Count; i++)
 			{
 				Shapes.DrawSquare(x[i], y[i], z[i], POINT_SQUARE_SIZE);
 			}
