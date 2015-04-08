@@ -16,7 +16,7 @@ namespace OpenTK.MiniProjects.SphereCube
 		private const float POINT_SQUARE_SIZE = 0.01f;
 		private const float SIDE_LENGTH = 2;
 
-		private const float CIRCLE_ROTATE_SPEED = 0.5f;
+		private float CIRCLE_ROTATE_SPEED = 0.0f;
 		private float CIRCLE_ANGLE = 0.0f;
 
 		public bool Transform { get; set; }
@@ -102,6 +102,8 @@ namespace OpenTK.MiniProjects.SphereCube
 			CIRCLE_ANGLE += CIRCLE_ROTATE_SPEED;
 
 			GL.Rotate(CIRCLE_ANGLE, new Vector3(0.0f, 0.1f, 0.1f));
+			if (CIRCLE_ANGLE > 360) { CIRCLE_ANGLE -= 360; }
+			else if (CIRCLE_ANGLE < 0) { CIRCLE_ANGLE += 360; }
 
 			for (var i = 0; i < x.Count; i++)
 			{
@@ -114,6 +116,11 @@ namespace OpenTK.MiniProjects.SphereCube
 			}
 
 			gw.SwapBuffers();
+		}
+
+		public override void OnMouseWheel(Input.MouseWheelEventArgs mouseWheelEventArgs, GameWindow game)
+		{
+			CIRCLE_ROTATE_SPEED += mouseWheelEventArgs.Delta;
 		}
 
 		private void TransformerKeyboard(object sender, KeyboardKeyEventArgs keyboardKeyEventArgs)
