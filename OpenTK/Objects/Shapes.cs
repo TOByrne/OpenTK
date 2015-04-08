@@ -11,10 +11,10 @@ namespace OpenTK.Objects
 
 			GL.Color3(1.0f, 1.0f, 1.0f);
 
-			GL.Vertex3(x - length, y - length, 4.0f + z);
-			GL.Vertex3(x + length, y - length, 4.0f + z);
-			GL.Vertex3(x + length, y + length, 4.0f + z);
-			GL.Vertex3(x - length, y + length, 4.0f + z);
+			GL.Vertex3(x - length, y - length, z);
+			GL.Vertex3(x + length, y - length, z);
+			GL.Vertex3(x + length, y + length, z);
+			GL.Vertex3(x - length, y + length, z);
 
 			GL.End();
 		}
@@ -28,18 +28,18 @@ namespace OpenTK.Objects
 
 			GL.Color3(r, g, b);
 
-			GL.Vertex3(x - l, y - l, z + 4 - l); GL.Vertex3(x - l, y - l, z + 4 + l); GL.Vertex3(x - l, y + l, z + 4 + l);
-			GL.Vertex3(x + l, y + l, z + 4 - l); GL.Vertex3(x - l, y - l, z + 4 - l); GL.Vertex3(x - l, y + l, z + 4 - l);
-			GL.Vertex3(x + l, y - l, z + 4 + l); GL.Vertex3(x - l, y - l, z + 4 - l); GL.Vertex3(x + l, y - l, z + 4 - l);
-			GL.Vertex3(x + l, y + l, z + 4 - l); GL.Vertex3(x + l, y - l, z + 4 - l); GL.Vertex3(x - l, y - l, z + 4 - l);
-			GL.Vertex3(x - l, y - l, z + 4 - l); GL.Vertex3(x - l, y + l, z + 4 + l); GL.Vertex3(x - l, y + l, z + 4 - l);
-			GL.Vertex3(x + l, y - l, z + 4 + l); GL.Vertex3(x - l, y - l, z + 4 + l); GL.Vertex3(x - l, y - l, z + 4 - l);
-			GL.Vertex3(x - l, y + l, z + 4 + l); GL.Vertex3(x - l, y - l, z + 4 + l); GL.Vertex3(x + l, y - l, z + 4 + l);
-			GL.Vertex3(x + l, y + l, z + 4 + l); GL.Vertex3(x + l, y - l, z + 4 - l); GL.Vertex3(x + l, y + l, z + 4 - l);
-			GL.Vertex3(x + l, y - l, z + 4 - l); GL.Vertex3(x + l, y + l, z + 4 + l); GL.Vertex3(x + l, y - l, z + 4 + l);
-			GL.Vertex3(x + l, y + l, z + 4 + l); GL.Vertex3(x + l, y + l, z + 4 - l); GL.Vertex3(x - l, y + l, z + 4 - l);
-			GL.Vertex3(x + l, y + l, z + 4 + l); GL.Vertex3(x - l, y + l, z + 4 - l); GL.Vertex3(x - l, y + l, z + 4 + l);
-			GL.Vertex3(x + l, y + l, z + 4 + l); GL.Vertex3(x - l, y + l, z + 4 + l); GL.Vertex3(x + l, y - l, z + 4 + l);
+			GL.Vertex3(x - l, y - l, z - l); GL.Vertex3(x - l, y - l, z + l); GL.Vertex3(x - l, y + l, z + l);
+			GL.Vertex3(x + l, y + l, z - l); GL.Vertex3(x - l, y - l, z - l); GL.Vertex3(x - l, y + l, z - l);
+			GL.Vertex3(x + l, y - l, z + l); GL.Vertex3(x - l, y - l, z - l); GL.Vertex3(x + l, y - l, z - l);
+			GL.Vertex3(x + l, y + l, z - l); GL.Vertex3(x + l, y - l, z - l); GL.Vertex3(x - l, y - l, z - l);
+			GL.Vertex3(x - l, y - l, z - l); GL.Vertex3(x - l, y + l, z + l); GL.Vertex3(x - l, y + l, z - l);
+			GL.Vertex3(x + l, y - l, z + l); GL.Vertex3(x - l, y - l, z + l); GL.Vertex3(x - l, y - l, z - l);
+			GL.Vertex3(x - l, y + l, z + l); GL.Vertex3(x - l, y - l, z + l); GL.Vertex3(x + l, y - l, z + l);
+			GL.Vertex3(x + l, y + l, z + l); GL.Vertex3(x + l, y - l, z - l); GL.Vertex3(x + l, y + l, z - l);
+			GL.Vertex3(x + l, y - l, z - l); GL.Vertex3(x + l, y + l, z + l); GL.Vertex3(x + l, y - l, z + l);
+			GL.Vertex3(x + l, y + l, z + l); GL.Vertex3(x + l, y + l, z - l); GL.Vertex3(x - l, y + l, z - l);
+			GL.Vertex3(x + l, y + l, z + l); GL.Vertex3(x - l, y + l, z - l); GL.Vertex3(x - l, y + l, z + l);
+			GL.Vertex3(x + l, y + l, z + l); GL.Vertex3(x - l, y + l, z + l); GL.Vertex3(x + l, y - l, z + l);
 
 			GL.End();
 		}

@@ -32,9 +32,7 @@ namespace OpenTK.MiniProjects.SphereCube
 
 			CIRCLE_ANGLE += CIRCLE_ROTATE_SPEED;
 
-			GL.Translate(0.0f, 0.0f, 4.0f);
 			GL.Rotate(CIRCLE_ANGLE, new Vector3(0.0f, 0.1f, 0.1f));
-			GL.Translate(0.0f, 0.0f, -4.0f);
 
 			GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
 

@@ -2,6 +2,7 @@
 using System;
 using OpenTK.Input;
 using OpenTK.MiniProjects;
+using OpenTK.MiniProjects.SphereCube;
 using OpenTK.MiniProjects.ParticleFountain;
 
 //	http://choorucode.com/2013/06/07/how-to-get-started-with-opentk-using-c-and-visual-studio/
