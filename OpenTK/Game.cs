@@ -3,6 +3,7 @@ using OpenTK.Graphics;
 using System;
 using OpenTK.Input;
 using OpenTK.MiniProjects;
+using OpenTK.MiniProjects.ParticleFountain;
 using OpenTK.MiniProjects.SphereCube;
 using OpenTK.MiniProjects.Triangle;
 
@@ -12,7 +13,9 @@ namespace OpenTK
 {
 	class Game : GameWindow
 	{
-		static readonly GameProject Project = new TrianglesCube();
+		static readonly GameProject Project = new Fountain();
+
+		public Game Instance { get { return this; } }
 
 		public Game()
 			: base(Project.WIDTH, Project.HEIGHT, Project.MODE, Project.TITLE)
@@ -46,6 +49,16 @@ namespace OpenTK
 			base.OnRenderFrame(e);
 
 			Project.OnRenderFrame(e, this);
+		}
+
+		protected override void OnMouseWheel(MouseWheelEventArgs e)
+		{
+			Project.OnMouseWheel(e, this);
+		}
+
+		protected override void OnMouseMove(MouseMoveEventArgs e)
+		{
+			Project.OnMouseMove(e, this);
 		}
 
 		[STAThread]

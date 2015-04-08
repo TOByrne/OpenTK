@@ -1,4 +1,5 @@
 ﻿
+using System;
 using OpenTK.Graphics;
 
 namespace OpenTK.Objects
@@ -45,5 +46,34 @@ namespace OpenTK.Objects
 			GL.End();
 		}
 
+		public static void Platform()
+		{
+			GL.Begin(BeginMode.Lines);
+
+			float
+				r = 0.1f,
+				g = 0.1f,
+				b = 0.1f;
+
+			for (float z = -10; z <= 10; z += 0.2f)
+			{
+				GL.Color3(r, g, b);
+				GL.Vertex3(-10.0f, -1.0f, z);
+				GL.Vertex3(+10.0f, -1.0f, z);
+			}
+
+			//for (float x = -10; x <= 10; x += 0.2f)
+			//{
+			//	GL.Color3(0.0f, 0.0f, 0.0f);
+			//	GL.Vertex3(x, -1.0f, -10.0f);
+
+			//	GL.Color3(0.1f, 0.1f, 0.1f);
+			//	GL.Vertex3(x, -1.0f, +10.0f);
+			//}
+
+			//Console.WriteLine(r + " " + g + " " + b);
+
+			GL.End();
+		}
 	}
 }

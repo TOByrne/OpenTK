@@ -56,7 +56,10 @@
   <ItemGroup>
     <Compile Include="Game.cs" />
     <Compile Include="MiniProjects\Asteroids\Asteroid1.cs" />
+    <Compile Include="MiniProjects\GameCamera.cs" />
     <Compile Include="MiniProjects\GameProject.cs" />
+    <Compile Include="MiniProjects\ParticleFountain\Fountain.cs" />
+    <Compile Include="MiniProjects\ParticleFountain\Particle.cs" />
     <Compile Include="MiniProjects\SphereCube\Cube.cs" />
     <Compile Include="MiniProjects\SphereCube\TrianglesCube.cs" />
     <Compile Include="MiniProjects\SphereCube\Sphere.cs" />

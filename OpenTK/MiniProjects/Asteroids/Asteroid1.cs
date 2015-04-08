@@ -6,7 +6,6 @@ namespace OpenTK.MiniProjects.Asteroids
 	{
 		public override void Init()
 		{
-
 			Initialized = true;
 		}
 
