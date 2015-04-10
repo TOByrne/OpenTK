@@ -74,11 +74,7 @@ namespace OpenTK.MiniProjects
 		}
 		public abstract void OnRenderFrame(FrameEventArgs e, GameWindow gw);
 
-		public virtual void OnMouseWheel(MouseWheelEventArgs mouseWheelEventArgs, GameWindow game)
-		{
-		}
-
-		public void OnMouseMove(MouseMoveEventArgs mouseMoveEventArgs, GameWindow game)
+		public virtual void OnMouseMove(MouseMoveEventArgs mouseMoveEventArgs, GameWindow game)
 		{
 			if (mouseMoveEventArgs.XDelta > 0)
 			{
@@ -106,5 +102,9 @@ namespace OpenTK.MiniProjects
 
 			//Console.WriteLine(Camera);
 		}
+
+		public virtual void OnKeyDown(KeyboardKeyEventArgs keyboardKeyEventArgs, GameWindow game) { }
+		public virtual void OnKeyUp(KeyboardKeyEventArgs keyboardKeyEventArgs, GameWindow game) { }
+		public virtual void OnMouseWheel(MouseWheelEventArgs mouseWheelEventArgs, GameWindow game) { }
 	}
 }

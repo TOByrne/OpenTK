@@ -17,15 +17,36 @@ namespace OpenTK.MiniProjects.ParticleFountain
 		private const float BOUNCE = -0.6f;
 
 		private const float InitialSpeed = 3;
-		private const float GRAVITY = 0.0981f / SPEED_FACTOR;
+		private float GRAVITY = 0.0981f;
 
-		private const float SPEED_FACTOR = 10;
+		private float SPEED_FACTOR = 100;
+
+		public bool DecBlue { get; set; }
+		public bool Gravity { get; set; }
+
+		public Particle Slow
+		{
+			get
+			{
+				SPEED_FACTOR = 100;
+				return this;
+			}
+		}
+
+		public Particle Fast
+		{
+			get
+			{
+				SPEED_FACTOR = 10;
+				return this;
+			}
+		}
 
 		private float Speed;
 
 		public bool ParticleExpired
 		{
-			get { return Red <= 0; }
+			get { return Blue <= 0; }
 		}
 
 		public float HorizontalDistance
@@ -36,14 +57,12 @@ namespace OpenTK.MiniProjects.ParticleFountain
 		public float Red { get; set; }
 		public float Green { get; set; }
 		public float Blue { get; set; }
+		public Vector3 Orientation { get; set; }
 
 		public Particle(float x, float y, float z, Random r)
 		{
-			X = x;
-			Y = y;
-			Z = z;
+			X = x; Y = y; Z = z; R = r;
 
-			R = r;
 			const double baseCalc = System.Math.PI * FULL_CIRCLE / NUM_POINTS / 180;
 
 			//	Random direction along the X axis
@@ -51,30 +70,93 @@ namespace OpenTK.MiniProjects.ParticleFountain
 			//	Random direction along the Z axis
 			B = (float)(baseCalc * (r.Next(0, 10000) - 5000) / 5000);
 
-			Red = 1.0f;
-			Green = 0.0f;
-			Blue = 0.0f;
+			Red = 1.0f; Green = 0.0f; Blue = 0.1f;
+			DecBlue = false;
 
-			Speed = InitialSpeed / SPEED_FACTOR;
+			Gravity = true;
+			GRAVITY /= SPEED_FACTOR;
+
+			var startSpeedDiff = (float) (r.NextDouble() / 100 - 0.005);
+			Speed = InitialSpeed / SPEED_FACTOR + startSpeedDiff;
+
+			Orientation = Vector3.UnitY;
 		}
 
 		public void Move()
 		{
-			Y += Speed;
-			X += A / SPEED_FACTOR;
-			Z += B / SPEED_FACTOR;
-
-			Speed -= GRAVITY;
-
-			if (Y < -1)
+			if (Orientation == Vector3.UnitX)
 			{
-				Speed *= BOUNCE;
+				Y += B / SPEED_FACTOR;
+				X += Speed;
+				Z += A / SPEED_FACTOR;
+			}
+			else if (Orientation == Vector3.UnitX * -1)
+			{
+				Y += B / SPEED_FACTOR;
+				X -= Speed;
+				Z += A / SPEED_FACTOR;
+			}
+			else if (Orientation == Vector3.UnitY)
+			{
 				Y += Speed;
+				X += A / SPEED_FACTOR;
+				Z += B / SPEED_FACTOR;
+			}
+			else if (Orientation == Vector3.UnitY * -1)
+			{
+				Y -= Speed;
+				X += A / SPEED_FACTOR;
+				Z += B / SPEED_FACTOR;
+			}
+			else if (Orientation == Vector3.UnitZ)
+			{
+				Y += B / SPEED_FACTOR;
+				X += A / SPEED_FACTOR;
+				Z += Speed;
+			}
+			else if (Orientation == Vector3.UnitZ * -1)
+			{
+				Y += B / SPEED_FACTOR;
+				X += A / SPEED_FACTOR;
+				Z -= Speed;
 			}
 
+			ApplyGravity();
+			AdjustColor();
+		}
+
+		private void ApplyGravity()
+		{
+			if (Gravity)
+			{
+				Speed -= GRAVITY;
+
+				if (Y < -1)
+				{
+					Speed *= BOUNCE;
+					Y += Speed;
+				}
+			}
+		}
+
+		private void AdjustColor()
+		{
 			Red -= 0.005f;
 			Green += 0.0005f;
-			Blue += 0.005f;
+
+			if (DecBlue)
+			{
+				Blue -= 0.005f;
+			}
+			else
+			{
+				Blue += 0.005f;
+			}
+
+			if (Blue > 0.9f)
+			{
+				DecBlue = true;
+			}
 		}
 
 		public void Draw()

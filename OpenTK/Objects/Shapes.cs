@@ -55,19 +55,25 @@ namespace OpenTK.Objects
 
 			for (float z = -10; z <= 10; z += 0.2f)
 			{
-				GL.Color3(r, g, b);
+				if (z > -0.1 && z < 0.1)
+					GL.Color3(0.3, 0, 0);
+				else
+					GL.Color3(r, g, b);
+
 				GL.Vertex3(-10.0f, -1.0f, z);
 				GL.Vertex3(+10.0f, -1.0f, z);
 			}
 
-			//for (float x = -10; x <= 10; x += 0.2f)
-			//{
-			//	GL.Color3(0.0f, 0.0f, 0.0f);
-			//	GL.Vertex3(x, -1.0f, -10.0f);
+			for (float x = -10; x <= 10; x += 0.2f)
+			{
+				if (x > -0.1 && x < 0.1)
+					GL.Color3(0, 0.3, 0);
+				else
+					GL.Color3(r, g, b);
 
-			//	GL.Color3(0.1f, 0.1f, 0.1f);
-			//	GL.Vertex3(x, -1.0f, +10.0f);
-			//}
+				GL.Vertex3(x, -1.0f, -10.0f);
+				GL.Vertex3(x, -1.0f, +10.0f);
+			}
 
 			//Console.WriteLine(r + " " + g + " " + b);
 

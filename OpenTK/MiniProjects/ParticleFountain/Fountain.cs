@@ -39,9 +39,15 @@ namespace OpenTK.MiniProjects.ParticleFountain
 
 			Particles.RemoveAll(x => x.ParticleExpired);
 
+			var startX = R.Next(-100, 100) / 80;
+			var startY = (float)(-1 + R.NextDouble() / 10);
+			var startZ = R.Next(-100, 100) / 80;
+
 			if (Particles.Count < Particles.Capacity)
 			{
-				Particles.Add(new Particle(0, -1, 0, R));
+				Particles.Add(
+					new Particle(startX, startY, startZ, R).Fast
+				);
 			}
 
 			foreach (var particle in Particles)

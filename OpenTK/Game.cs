@@ -2,6 +2,9 @@
 using System;
 using OpenTK.Input;
 using OpenTK.MiniProjects;
+using OpenTK.MiniProjects.GameShip;
+using OpenTK.MiniProjects.MultipeShapes;
+using OpenTK.MiniProjects.ShipEngine;
 using OpenTK.MiniProjects.SphereCube;
 using OpenTK.MiniProjects.ParticleFountain;
 
@@ -12,7 +15,7 @@ namespace OpenTK
 {
 	class Game : GameWindow
 	{
-		static readonly GameProject Project = new Fountain();
+		static readonly GameProject Project = new Ship();
 
 		public Game Instance { get { return this; } }
 
@@ -58,6 +61,16 @@ namespace OpenTK
 		protected override void OnMouseMove(MouseMoveEventArgs e)
 		{
 			Project.OnMouseMove(e, this);
+		}
+
+		protected override void OnKeyDown(KeyboardKeyEventArgs e)
+		{
+			Project.OnKeyDown(e, this);
+		}
+
+		protected override void OnKeyUp(KeyboardKeyEventArgs e)
+		{
+			Project.OnKeyUp(e, this);
 		}
 
 		[STAThread]
