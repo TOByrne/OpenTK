@@ -48,7 +48,9 @@ namespace OpenTK.MiniProjects.FlyingShip
 
 			var particleVelocity = new Vector3(0, 0.2f, 0);
 
-			particleVelocity = Vector3.Transform(particleVelocity, Matrix4.CreateRotationX(RollAngle));
+			var rollRadians = (float)(RollAngle * System.Math.PI / 180);
+
+			particleVelocity = Vector3.Transform(particleVelocity, Matrix4.CreateRotationX(rollRadians));
 
 			Particles.Add(new Particle(particleVelocity, R));
 

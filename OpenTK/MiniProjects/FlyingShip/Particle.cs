@@ -47,7 +47,7 @@ namespace OpenTK.MiniProjects.FlyingShip
 			GL.PopMatrix();
 
 			//	Slow things down a little.
-			Velocity = Velocity * new Vector3(0.9f, 0.9f, 0.9f);
+			Velocity = Velocity * new Vector3(0.95f, 0.95f, 0.95f);
 
 			Position += Velocity;
 		}
