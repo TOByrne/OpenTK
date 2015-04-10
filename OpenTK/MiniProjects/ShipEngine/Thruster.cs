@@ -85,8 +85,14 @@ namespace OpenTK.MiniProjects.ShipEngine
 			var startY = Position.Y;
 			var startZ = Position.Z;
 
+			float rX = (float)(R.Next(0, 10000) - 5000) / 50000;
+			float rY = (float)(R.Next(0, 10000) - 5000) / 50000;
+			float rZ = (float)(R.Next(0, 10000) - 5000) / 50000;
+			var randomizer = new Vector3(rX, rY, rZ);
+			var particleVelocity = (Orientation + randomizer) / 100;
+
 			Particles.Add(
-				new Particle(startX, startY, startZ, R)
+				new Particle(Position, particleVelocity, R)
 				{
 					Gravity = false,
 					Orientation = Orientation

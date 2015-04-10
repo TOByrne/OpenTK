@@ -56,6 +56,10 @@
   <ItemGroup>
     <Compile Include="Game.cs" />
     <Compile Include="MiniProjects\Asteroids\Asteroid1.cs" />
+    <Compile Include="MiniProjects\FlyingShip\Engine.cs" />
+    <Compile Include="MiniProjects\FlyingShip\FlyingShip.cs" />
+    <Compile Include="MiniProjects\FlyingShip\Particle.cs" />
+    <Compile Include="MiniProjects\FlyingShip\Thruster.cs" />
     <Compile Include="MiniProjects\GameCamera.cs" />
     <Compile Include="MiniProjects\GameProject.cs" />
     <Compile Include="MiniProjects\GameShip\Ship.cs" />

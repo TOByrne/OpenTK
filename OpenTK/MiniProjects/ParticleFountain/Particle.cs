@@ -1,4 +1,5 @@
 using System;
+using OpenTK.Graphics;
 using OpenTK.Objects;
 
 namespace OpenTK.MiniProjects.ParticleFountain
@@ -7,7 +8,8 @@ namespace OpenTK.MiniProjects.ParticleFountain
 	{
 		private Random R { get; set; }
 
-		private float X, Y, Z;
+		private Vector3 Velocity { get; set; }
+		private Vector3 Position { get; set; }
 		private readonly float A, B;
 
 		private float ParticleSpeed = 0.2f;
@@ -32,7 +34,6 @@ namespace OpenTK.MiniProjects.ParticleFountain
 				return this;
 			}
 		}
-
 		public Particle Fast
 		{
 			get
@@ -49,19 +50,16 @@ namespace OpenTK.MiniProjects.ParticleFountain
 			get { return Blue <= 0; }
 		}
 
-		public float HorizontalDistance
-		{
-			get { return (float)System.Math.Sqrt((X*X) + (Z*Z)); }
-		}
-
 		public float Red { get; set; }
 		public float Green { get; set; }
 		public float Blue { get; set; }
 		public Vector3 Orientation { get; set; }
 
-		public Particle(float x, float y, float z, Random r)
+		public Particle(Vector3 initialPosition, Vector3 velocity, Random r)
 		{
-			X = x; Y = y; Z = z; R = r;
+			Position = initialPosition;
+			Velocity = velocity;
+			R = r;
 
 			const double baseCalc = System.Math.PI * FULL_CIRCLE / NUM_POINTS / 180;
 
@@ -84,42 +82,43 @@ namespace OpenTK.MiniProjects.ParticleFountain
 
 		public void Move()
 		{
-			if (Orientation == Vector3.UnitX)
-			{
-				Y += B / SPEED_FACTOR;
-				X += Speed;
-				Z += A / SPEED_FACTOR;
-			}
-			else if (Orientation == Vector3.UnitX * -1)
-			{
-				Y += B / SPEED_FACTOR;
-				X -= Speed;
-				Z += A / SPEED_FACTOR;
-			}
-			else if (Orientation == Vector3.UnitY)
-			{
-				Y += Speed;
-				X += A / SPEED_FACTOR;
-				Z += B / SPEED_FACTOR;
-			}
-			else if (Orientation == Vector3.UnitY * -1)
-			{
-				Y -= Speed;
-				X += A / SPEED_FACTOR;
-				Z += B / SPEED_FACTOR;
-			}
-			else if (Orientation == Vector3.UnitZ)
-			{
-				Y += B / SPEED_FACTOR;
-				X += A / SPEED_FACTOR;
-				Z += Speed;
-			}
-			else if (Orientation == Vector3.UnitZ * -1)
-			{
-				Y += B / SPEED_FACTOR;
-				X += A / SPEED_FACTOR;
-				Z -= Speed;
-			}
+
+			//if (Orientation == Vector3.UnitX)
+			//{
+			//	Y += B / SPEED_FACTOR;
+			//	X += Speed;
+			//	Z += A / SPEED_FACTOR;
+			//}
+			//else if (Orientation == Vector3.UnitX * -1)
+			//{
+			//	Y += B / SPEED_FACTOR;
+			//	X -= Speed;
+			//	Z += A / SPEED_FACTOR;
+			//}
+			//else if (Orientation == Vector3.UnitY)
+			//{
+			//	Y += Speed;
+			//	X += A / SPEED_FACTOR;
+			//	Z += B / SPEED_FACTOR;
+			//}
+			//else if (Orientation == Vector3.UnitY * -1)
+			//{
+			//	Y -= Speed;
+			//	X += A / SPEED_FACTOR;
+			//	Z += B / SPEED_FACTOR;
+			//}
+			//else if (Orientation == Vector3.UnitZ)
+			//{
+			//	Y += B / SPEED_FACTOR;
+			//	X += A / SPEED_FACTOR;
+			//	Z += Speed;
+			//}
+			//else if (Orientation == Vector3.UnitZ * -1)
+			//{
+			//	Y += B / SPEED_FACTOR;
+			//	X += A / SPEED_FACTOR;
+			//	Z -= Speed;
+			//}
 
 			ApplyGravity();
 			AdjustColor();
@@ -131,10 +130,10 @@ namespace OpenTK.MiniProjects.ParticleFountain
 			{
 				Speed -= GRAVITY;
 
-				if (Y < -1)
+				if (Position.Y < -1)
 				{
 					Speed *= BOUNCE;
-					Y += Speed;
+					Position += new Vector3(0, Speed, 0);
 				}
 			}
 		}
@@ -161,7 +160,13 @@ namespace OpenTK.MiniProjects.ParticleFountain
 
 		public void Draw()
 		{
-			Shapes.DrawCube(X, Y, Z, 0.01f, Red, Green, Blue);
+			Position += Velocity;
+			GL.PushMatrix();
+
+			GL.Translate(Position);
+			Shapes.DrawCube(0, 0, 0, 0.01f, Red, Green, Blue);
+
+			GL.PopMatrix();
 		}
 	}
 }

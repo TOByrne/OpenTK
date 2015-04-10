@@ -43,10 +43,12 @@ namespace OpenTK.MiniProjects.ParticleFountain
 			var startY = (float)(-1 + R.NextDouble() / 10);
 			var startZ = R.Next(-100, 100) / 80;
 
+			var particlePosition = new Vector3(startX, startY, startZ);
+
 			if (Particles.Count < Particles.Capacity)
 			{
 				Particles.Add(
-					new Particle(startX, startY, startZ, R).Fast
+					new Particle(particlePosition, Vector3.UnitY, R).Fast
 				);
 			}
 

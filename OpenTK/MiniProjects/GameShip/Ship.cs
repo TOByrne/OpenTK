@@ -142,11 +142,17 @@ namespace OpenTK.MiniProjects.GameShip
 
 		private void On(List<Thruster> thrusters)
 		{
-			thrusters.ForEach(x => x.ThrustOn());
+			if (thrusters != null && thrusters.Any())
+			{
+				thrusters.ForEach(x => x.ThrustOn());
+			}
 		}
 		private void Off(List<Thruster> thrusters)
 		{
-			thrusters.ForEach(x => x.ThrustOff());
+			if (thrusters != null && thrusters.Any())
+			{
+				thrusters.ForEach(x => x.ThrustOff());
+			}
 		}
 
 		protected List<Thruster> ForwardThrusters { get; set; }
