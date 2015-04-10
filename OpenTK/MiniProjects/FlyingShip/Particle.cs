@@ -11,8 +11,12 @@ namespace OpenTK.MiniProjects.FlyingShip
 		public Vector3 Position { get; protected set; }
 		public Vector3 Velocity { get; protected set; }
 
+		public bool Dead { get { return Velocity.Length < 0.001; } }
+
 		public Particle(Vector3 velocity, Random r = null)
 		{
+			R = r;
+
 			//	No position sent to constructor, because starting position
 			//	will be 0, 0, 0 +/- some randomness
 
@@ -38,11 +42,14 @@ namespace OpenTK.MiniProjects.FlyingShip
 			GL.PushMatrix();
 
 			GL.Translate(Position);
-			Shapes.DrawCube(0, 0, 0, 0.1f);
+			Shapes.DrawCube(0, 0, 0, 0.01f);
 
 			GL.PopMatrix();
 
-			Velocity = Velocity * 0.9;
+			//	Slow things down a little.
+			Velocity = Velocity * new Vector3(0.9f, 0.9f, 0.9f);
+
+			Position += Velocity;
 		}
 	}
 }

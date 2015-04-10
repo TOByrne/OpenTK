@@ -2,6 +2,7 @@
 using System;
 using OpenTK.Input;
 using OpenTK.MiniProjects;
+using OpenTK.MiniProjects.FlyingShip;
 using OpenTK.MiniProjects.GameShip;
 using OpenTK.MiniProjects.MultipeShapes;
 using OpenTK.MiniProjects.ShipEngine;
@@ -15,7 +16,7 @@ namespace OpenTK
 {
 	class Game : GameWindow
 	{
-		static readonly GameProject Project = new Ship();
+		static readonly GameProject Project = new FlyingShip();
 
 		public Game Instance { get { return this; } }
 
