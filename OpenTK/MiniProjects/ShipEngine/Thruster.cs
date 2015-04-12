@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using OpenTK.Graphics;
+using OpenTK.MiniProjects.GameShip;
 using OpenTK.MiniProjects.ParticleFountain;
 
 namespace OpenTK.MiniProjects.ShipEngine
@@ -54,13 +55,17 @@ namespace OpenTK.MiniProjects.ShipEngine
 			}
 		}
 
-		public Thruster(Vector3 position, Random r)
+		Ship MyShip { get; set; }
+
+		public Thruster(Vector3 position, Random r, Ship ship)
 		{
 			Position = position;
 			R = r;
 			Particles = new List<Particle>();
 
 			FireThrust = false;
+
+			MyShip = ship;
 		}
 
 		public void Draw()
@@ -89,7 +94,16 @@ namespace OpenTK.MiniProjects.ShipEngine
 			float rY = (float)(R.Next(0, 10000) - 5000) / 50000;
 			float rZ = (float)(R.Next(0, 10000) - 5000) / 50000;
 			var randomizer = new Vector3(rX, rY, rZ);
+
 			var particleVelocity = (Orientation + randomizer) / 100;
+
+			var rollRatians = (float)(MyShip.RollAngle * System.Math.PI / 180);
+			var pitchRatians = (float)(MyShip.PitchAngle * System.Math.PI / 180);
+			var yawRatians = (float)(MyShip.YawAngle * System.Math.PI / 180);
+
+			particleVelocity = Vector3.Transform(particleVelocity,
+				Matrix4.CreateRotationX(rollRatians)*Matrix4.CreateRotationY(yawRatians)*Matrix4.CreateRotationZ(pitchRatians)
+			);
 
 			Particles.Add(
 				new Particle(Position, particleVelocity, R)

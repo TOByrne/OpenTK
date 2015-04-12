@@ -56,17 +56,13 @@
   <ItemGroup>
     <Compile Include="Game.cs" />
     <Compile Include="MiniProjects\Asteroids\Asteroid1.cs" />
-    <Compile Include="MiniProjects\FlyingShip\Engine.cs" />
-    <Compile Include="MiniProjects\FlyingShip\FlyingShip.cs" />
-    <Compile Include="MiniProjects\FlyingShip\Particle.cs" />
-    <Compile Include="MiniProjects\FlyingShip\Thruster.cs" />
     <Compile Include="MiniProjects\GameCamera.cs" />
     <Compile Include="MiniProjects\GameProject.cs" />
     <Compile Include="MiniProjects\GameShip\Ship.cs" />
     <Compile Include="MiniProjects\MultipeShapes\MultipleCubes.cs" />
     <Compile Include="MiniProjects\ParticleFountain\Fountain.cs" />
     <Compile Include="MiniProjects\ParticleFountain\Particle.cs" />
-    <Compile Include="MiniProjects\ShipEngine\Engine.cs" />
+    <Compile Include="MiniProjects\ShipEngine\Maneuvering.cs" />
     <Compile Include="MiniProjects\ShipEngine\Thruster.cs" />
     <Compile Include="MiniProjects\SphereCube\Cube.cs" />
     <Compile Include="MiniProjects\SphereCube\TrianglesCube.cs" />

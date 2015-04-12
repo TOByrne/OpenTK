@@ -49,14 +49,15 @@ namespace OpenTK.MiniProjects.FlyingShip
 			var particleVelocity = new Vector3(0, 0.2f, 0);
 
 			var rollRadians = (float)(RollAngle * System.Math.PI / 180);
+			var pitchRadians = (float)(PitchAngle * System.Math.PI / 180);
 
-			particleVelocity = Vector3.Transform(particleVelocity, Matrix4.CreateRotationX(rollRadians));
+			particleVelocity = Vector3.Transform(particleVelocity, Matrix4.CreateRotationX(rollRadians) * Matrix4.CreateRotationZ(pitchRadians));
 
 			Particles.Add(new Particle(particleVelocity, R));
 
 			GL.PushMatrix();
 				Shapes.Platform();
-				GL.Rotate(RollAngle++, Vector3.UnitX);
+				GL.Rotate(RollAngle++, new Vector3(1, 0, 1));
 
 				//	represents the engine/thruster.
 				Shapes.DrawCube(0, 0, 0, 0.5f);
