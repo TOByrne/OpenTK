@@ -1,10 +1,10 @@
 ﻿using System.Drawing;
 using OpenTK.Graphics;
 using OpenTK.Input;
+using OpenTK.MiniProjects.ShipEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenTK.MiniProjects.ShipEngine;
 using OpenTK.Objects;
 
 namespace OpenTK.MiniProjects.GameShip
@@ -169,10 +169,10 @@ namespace OpenTK.MiniProjects.GameShip
 			var engine3Position = new Vector3(0f, -0.05f, 0f);
 			var engine4Position = new Vector3(0f, 0.05f, 0f);
 
-			var engine1 = new Thruster(engine1Position, R, this).Forward;
-			var engine2 = new Thruster(engine2Position, R, this).Forward;
-			var engine3 = new Thruster(engine3Position, R, this).Forward;
-			var engine4 = new Thruster(engine4Position, R, this).Forward;
+			var engine1 = new Thruster(engine1Position, R).Forward;
+			var engine2 = new Thruster(engine2Position, R).Forward;
+			var engine3 = new Thruster(engine3Position, R).Forward;
+			var engine4 = new Thruster(engine4Position, R).Forward;
 
 			Thrusters.Add(engine1);
 			Thrusters.Add(engine2);
@@ -199,7 +199,7 @@ namespace OpenTK.MiniProjects.GameShip
 		private void InitReverseThruster()
 		{
 			var thruster01Position = new Vector3(-1.1f, 0, 0.0f); //	Nose, front - slows the ship down
-			var thruster01 = new Thruster(thruster01Position, R, this).Reverse;
+			var thruster01 = new Thruster(thruster01Position, R).Reverse;
 			thruster01.Set(Maneuvering.ThrusterPosition.Nose | Maneuvering.ThrusterPosition.Front);
 			Thrusters.Add(thruster01);
 		}
@@ -226,8 +226,8 @@ namespace OpenTK.MiniProjects.GameShip
 		{
 			var thruster02Position = new Vector3(); //	Nose, left side - points ship right
 			var thruster03Position = new Vector3(); //	Wing, right side - points ship right
-			var thruster02 = new Thruster(thruster02Position, R, this);
-			var thruster03 = new Thruster(thruster03Position, R, this);
+			var thruster02 = new Thruster(thruster02Position, R);
+			var thruster03 = new Thruster(thruster03Position, R);
 			thruster02.Set(Maneuvering.ThrusterPosition.Nose | Maneuvering.ThrusterPosition.Left);
 			thruster03.Set(Maneuvering.ThrusterPosition.Rear | Maneuvering.ThrusterPosition.Right);
 			Thrusters.Add(thruster02);
@@ -238,8 +238,8 @@ namespace OpenTK.MiniProjects.GameShip
 		{
 			var thruster04Position = new Vector3(); //	Nose, right side - points ship left
 			var thruster05Position = new Vector3(); //	Wing, left side - points ship left
-			var thruster04 = new Thruster(thruster04Position, R, this);
-			var thruster05 = new Thruster(thruster05Position, R, this);
+			var thruster04 = new Thruster(thruster04Position, R);
+			var thruster05 = new Thruster(thruster05Position, R);
 			thruster04.Set(Maneuvering.ThrusterPosition.Nose | Maneuvering.ThrusterPosition.Right);
 			thruster05.Set(Maneuvering.ThrusterPosition.Rear | Maneuvering.ThrusterPosition.Left);
 			Thrusters.Add(thruster04);
@@ -249,12 +249,12 @@ namespace OpenTK.MiniProjects.GameShip
 		private void InitPitchDown()
 		{
 			var thruster06Position = new Vector3(); //	Nose, top - points the ship down
-			var thruster06 = new Thruster(thruster06Position, R, this);
+			var thruster06 = new Thruster(thruster06Position, R);
 			thruster06.Set(Maneuvering.ThrusterPosition.Nose | Maneuvering.ThrusterPosition.Top);
 			Thrusters.Add(thruster06);
 
 			var thruster07Position = new Vector3(); //	Tail, bottom - points the ship down
-			var thruster07 = new Thruster(thruster07Position, R, this);
+			var thruster07 = new Thruster(thruster07Position, R);
 			thruster07.Set(Maneuvering.ThrusterPosition.Tail | Maneuvering.ThrusterPosition.Bottom);
 			Thrusters.Add(thruster07);
 
@@ -268,12 +268,12 @@ namespace OpenTK.MiniProjects.GameShip
 		private void InitPitchUp()
 		{
 			var thruster08Position = new Vector3(); //	Nose, bottom - points the ship up
-			var thruster08 = new Thruster(thruster08Position, R, this);
+			var thruster08 = new Thruster(thruster08Position, R);
 			thruster08.Set(Maneuvering.ThrusterPosition.Nose | Maneuvering.ThrusterPosition.Bottom);
 			Thrusters.Add(thruster08);
 
 			var thruster09Position = new Vector3(); //	Tail, top - points the ship up
-			var thruster09 = new Thruster(thruster09Position, R, this);
+			var thruster09 = new Thruster(thruster09Position, R);
 			thruster09.Set(Maneuvering.ThrusterPosition.Tail | Maneuvering.ThrusterPosition.Top);
 			Thrusters.Add(thruster09);
 
@@ -287,14 +287,14 @@ namespace OpenTK.MiniProjects.GameShip
 		private void InitRollLeft()
 		{
 			var thruster10Position = new Vector3(0.1f, 0, -0.2f); //	Wing, top left - rolls the ship left
-			var thruster10 = new Thruster(thruster10Position, R, this);
+			var thruster10 = new Thruster(thruster10Position, R);
 			thruster10.Set(Vector3.UnitY);
 			thruster10.Set(Maneuvering.ThrusterPosition.Rear | Maneuvering.ThrusterPosition.Top |
 							Maneuvering.ThrusterPosition.Left);
 			Thrusters.Add(thruster10);
 
 			var thruster11Position = new Vector3(0.1f, 0, 0.2f); //	Wing, bottom right - rolls the ship left
-			var thruster11 = new Thruster(thruster11Position, R, this);
+			var thruster11 = new Thruster(thruster11Position, R);
 			thruster11.Set(Vector3.UnitY * -1);
 			thruster11.Set(Maneuvering.ThrusterPosition.Rear | Maneuvering.ThrusterPosition.Bottom |
 							Maneuvering.ThrusterPosition.Right);
@@ -310,14 +310,14 @@ namespace OpenTK.MiniProjects.GameShip
 		private void InitRollRight()
 		{
 			var thruster12Position = new Vector3(0.1f, 0, 0.2f); //	Wing, top right - rolls the ship right
-			var thruster12 = new Thruster(thruster12Position, R, this);
+			var thruster12 = new Thruster(thruster12Position, R);
 			thruster12.Set(Vector3.UnitY);
 			thruster12.Set(Maneuvering.ThrusterPosition.Rear | Maneuvering.ThrusterPosition.Top |
 							Maneuvering.ThrusterPosition.Right);
 			Thrusters.Add(thruster12);
 
 			var thruster13Position = new Vector3(0.1f, 0, -0.2f); //	Wing, bottom left - rolls the ship right
-			var thruster13 = new Thruster(thruster13Position, R, this);
+			var thruster13 = new Thruster(thruster13Position, R);
 			thruster13.Set(Vector3.UnitY * -1);
 			thruster13.Set(Maneuvering.ThrusterPosition.Rear | Maneuvering.ThrusterPosition.Bottom |
 							Maneuvering.ThrusterPosition.Left);
