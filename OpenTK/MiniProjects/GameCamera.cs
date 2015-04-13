@@ -15,7 +15,7 @@ namespace OpenTK.MiniProjects
 
 		public GameCamera()
 		{
-			Distance = 10.0f;
+			Distance = 20.0f;
 			HorizontalAngle = 0.0f;
 			VerticalAngle = 0.0f;
 
