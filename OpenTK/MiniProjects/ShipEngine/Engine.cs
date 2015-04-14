@@ -166,6 +166,20 @@ namespace OpenTK.MiniProjects.ShipEngine
 
 	public struct Maneuvering
 	{
+		[Flags]
+		public enum Flight
+		{
+			None		= 0x0000,
+			Forward		= 0x0001,
+			Backward	= 0x0002,
+			RollLeft	= 0x0004,
+			RollRight	= 0x0008,
+			PitchUp		= 0x0016,
+			PitchDown	= 0x0032,
+			YawLeft		= 0x0064,
+			YawRight	= 0x0128
+		}
+
 		public enum Thrust
 		{
 			Port,

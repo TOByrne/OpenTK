@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using OpenTK.Graphics;
 using OpenTK.MiniProjects.Shared;
+using OpenTK.MiniProjects.ShipEngine;
 
 namespace OpenTK.MiniProjects.FlyingShip
 {
@@ -12,16 +14,28 @@ namespace OpenTK.MiniProjects.FlyingShip
 		public Random R { get; set; }
 		public Vector3 Position { get; set; }
 		public Vector3 Velocity { get; set; }
+		float xVelocity { get; set; }
+		float yVelocity { get; set; }
+		float zVelocity { get; set; }
 
 		List<Thruster> Thrusters { get; set; }
 		public int RollAngle { get; set; }
 		public int PitchAngle { get; set; }
 		public int YawAngle { get; set; }
 
+		List<Thruster> MainEngines { get; set; }
+		List<Thruster> ReverseThrusters { get; set; }
+		Maneuvering.Flight engagedFlight { get; set; }
+
+
 		public Ship(Vector3 position, Vector3 velocity, GameEnvironment environment, Random r)
 		{
 			Position = position;
 			Velocity = velocity;
+			xVelocity = Velocity.X;
+			yVelocity = Velocity.Y;
+			zVelocity = Velocity.Z;
+
 			Environment = environment;
 			R = r;
 
@@ -32,11 +46,91 @@ namespace OpenTK.MiniProjects.FlyingShip
 
 		public void Init()
 		{
+			InitForwardThrusters();
+			InitReverseThrusters();
+			InitYawLeftThrusters();
+			InitYawRightThrusters();
+			InitRollLeftThrusters();
+			InitRollRightThrusters();
+			//InitPitchUp();
+			//InitPitchDown();
+		}
+
+		private void InitForwardThrusters()
+		{
+			var thruster01 = new Thruster(new Vector3(0.5f, 0, 0.0f), this, Vector3.UnitZ, Environment);
+			var thruster02 = new Thruster(new Vector3(-0.5f, 0, 0.0f), this, Vector3.UnitZ, Environment);
+
+			thruster01.Location = Thruster.Placement.Back;
+			thruster02.Location = Thruster.Placement.Back;
+
 			Thrusters = new List<Thruster>()
 			{
-				new Thruster(new Vector3(1, 0, -0.3f), this, Environment),
-				new Thruster(new Vector3(-1, 0, -0.3f), this, Environment)
+				thruster01,
+				thruster02
 			};
+
+			MainEngines = new List<Thruster>() {thruster01, thruster02};
+		}
+
+		private void InitReverseThrusters()
+		{
+			var thruster01 = new Thruster(new Vector3(0.01f, 0, -1.8f), this, Vector3.UnitZ * -1, Environment);
+			var thruster02 = new Thruster(new Vector3(-0.01f, 0, -1.8f), this, Vector3.UnitZ * -1, Environment);
+
+			thruster01.Location = Thruster.Placement.Front;
+			thruster02.Location = Thruster.Placement.Front;
+
+			Thrusters.Add(thruster01);
+			Thrusters.Add(thruster02);
+
+			ReverseThrusters = new List<Thruster>() { thruster01, thruster02 };
+		}
+
+		private void InitRollLeftThrusters()
+		{
+			var thruster01 = new Thruster(new Vector3(1f, 0, 0), this, Vector3.UnitY * -1, Environment);
+			thruster01.Location = Thruster.Placement.Right | Thruster.Placement.Bottom;
+			Thrusters.Add(thruster01);
+
+			var thruster02 = new Thruster(new Vector3(-1f, 0, 0), this, Vector3.UnitY, Environment);
+			thruster02.Location = Thruster.Placement.Left | Thruster.Placement.Top;
+			Thrusters.Add(thruster02);
+		}
+
+		private void InitRollRightThrusters()
+		{
+			var thruster01 = new Thruster(new Vector3(1f, 0, 0), this, Vector3.UnitY, Environment);
+			thruster01.Location = Thruster.Placement.Right | Thruster.Placement.Top;
+			Thrusters.Add(thruster01);
+
+			var thruster02 = new Thruster(new Vector3(-1f, 0, 0), this, Vector3.UnitY * -1, Environment);
+			thruster02.Location = Thruster.Placement.Left | Thruster.Placement.Bottom;
+			Thrusters.Add(thruster02);
+		}
+
+		private void InitYawLeftThrusters()
+		{
+			var thruster01 = new Thruster(new Vector3(0.01f, 0, -1.8f), this, Vector3.UnitZ, Environment);
+			var thruster02 = new Thruster(new Vector3(-0.8f, 0, 0f), this, Vector3.UnitZ * -1, Environment);
+
+			thruster01.Location = Thruster.Placement.Front | Thruster.Placement.Right;
+			thruster02.Location = Thruster.Placement.Back | Thruster.Placement.Left;
+
+			Thrusters.Add(thruster01);
+			Thrusters.Add(thruster02);
+		}
+
+		private void InitYawRightThrusters()
+		{
+			var thruster01 = new Thruster(new Vector3(-0.01f, 0, -1.8f), this, Vector3.UnitZ * -1, Environment);
+			var thruster02 = new Thruster(new Vector3(0.8f, 0, 0f), this, Vector3.UnitZ, Environment);
+
+			thruster01.Location = Thruster.Placement.Front | Thruster.Placement.Left;
+			thruster02.Location = Thruster.Placement.Back | Thruster.Placement.Right;
+
+			Thrusters.Add(thruster01);
+			Thrusters.Add(thruster02);
 		}
 
 		public void Draw()
@@ -46,7 +140,7 @@ namespace OpenTK.MiniProjects.FlyingShip
 			GL.PushMatrix();
 			GL.Translate(Position);
 
-			GL.Rotate(RollAngle++, Vector3.UnitZ);
+			//GL.Rotate(RollAngle++, Vector3.UnitZ);
 
 			GL.Begin(BeginMode.LineStrip);
 
@@ -68,7 +162,111 @@ namespace OpenTK.MiniProjects.FlyingShip
 
 		public void UpdateFrame()
 		{
-			Thrusters.ForEach(x => x.UpdateFrame());
+			if (engagedFlight.HasFlag(Maneuvering.Flight.Forward)) { Forward(); }
+			if (engagedFlight.HasFlag(Maneuvering.Flight.Backward)) { Backward(); }
+			if (engagedFlight.HasFlag(Maneuvering.Flight.RollLeft)) { RollLeft(); }
+			if (engagedFlight.HasFlag(Maneuvering.Flight.RollRight)) { RollRight(); }
+			if (engagedFlight.HasFlag(Maneuvering.Flight.PitchDown)) { PitchDown(); }
+			if (engagedFlight.HasFlag(Maneuvering.Flight.PitchUp)) { PitchUp(); }
+			if (engagedFlight.HasFlag(Maneuvering.Flight.YawLeft)) { YawLeft(); }
+			if (engagedFlight.HasFlag(Maneuvering.Flight.YawRight)) { YawRight(); }
+
+			Position += Velocity;
+		}
+
+		private void Forward()
+		{
+			MainEngines.ForEach(x => x.Fire());
+			Velocity += new Vector3(xVelocity, yVelocity, zVelocity);
+		}
+
+		private void Backward()
+		{
+			ReverseThrusters.ForEach(x => x.Fire());
+			Velocity += new Vector3(xVelocity, yVelocity, zVelocity);
+		}
+
+		private void RollLeft()
+		{
+			//	Thrusters on the right and oriented down
+			//	Thrusters on the left and oriented up
+			var thrusters = Thrusters.Where(x =>
+				x.Orientation == Vector3.UnitY && x.Location.HasFlag(Thruster.Placement.Left) ||
+				x.Orientation == Vector3.UnitY * -1 && x.Location.HasFlag(Thruster.Placement.Right)
+			).ToList();
+
+			thrusters.ForEach(x => x.Fire());
+		}
+
+		private void RollRight()
+		{
+			//	Thrusters on the right and oriented up
+			//	Thrusters on the left and oriented down.
+			var thrusters = Thrusters.Where(x =>
+				x.Orientation == Vector3.UnitY && x.Location.HasFlag(Thruster.Placement.Right) ||
+				x.Orientation == Vector3.UnitY * -1 && x.Location.HasFlag(Thruster.Placement.Left)
+			).ToList();
+
+			thrusters.ForEach(x => x.Fire());
+		}
+
+		private void PitchUp()
+		{
+			//	Thrusters at the front and oriented down
+			//	Thrusters at the back and oriented up
+			var thrusters = Thrusters.Where(x =>
+				(x.Location.HasFlag(Thruster.Placement.Front) && x.Orientation == Vector3.UnitY) ||
+				(x.Location.HasFlag(Thruster.Placement.Back) && x.Orientation == (Vector3.UnitY*-1))
+				).ToList();
+
+			thrusters.ForEach(x => x.Fire());
+		}
+
+		private void PitchDown()
+		{
+			//	Thrusters at the front and oriented up
+			//	Thrusters at the back and oriented down
+			var thrusters = Thrusters.Where(x =>
+				(x.Location.HasFlag(Thruster.Placement.Front) && x.Orientation == Vector3.UnitY * -1) ||
+				(x.Location.HasFlag(Thruster.Placement.Back) && x.Orientation == (Vector3.UnitY))
+				).ToList();
+
+			thrusters.ForEach(x => x.Fire());
+		}
+
+		private void YawRight()
+		{
+			//	Thrusters at the front and oriented left
+			//	Thrusters at the back and oriented right
+			var thrusters = Thrusters.Where(x =>
+				(x.Location.HasFlag(Thruster.Placement.Front) && x.Orientation == Vector3.UnitZ * -1) ||
+				(x.Location.HasFlag(Thruster.Placement.Back) && x.Orientation == (Vector3.UnitZ))
+				).ToList();
+
+			thrusters.ForEach(x => x.Fire());
+		}
+
+		private void YawLeft()
+		{
+			//	Thrusters at the front and oriented right
+			//	Thrusters at the back and oriented left
+			var thrusters = Thrusters.Where(x =>
+				(x.Location.HasFlag(Thruster.Placement.Front) && x.Orientation == Vector3.UnitZ) ||
+				(x.Location.HasFlag(Thruster.Placement.Back) && x.Orientation == (Vector3.UnitZ * -1))
+				).ToList();
+
+			thrusters.ForEach(x => x.Fire());
+		}
+
+		public void BeginManeuver(Maneuvering.Flight maneuver)
+		{
+			//	Add the current maneuver to the already started maneuvers
+			engagedFlight |= maneuver;
+		}
+
+		public void StopMeneuver(Maneuvering.Flight maneuver)
+		{
+			engagedFlight &= ~maneuver;
 		}
 	}
 }

@@ -3,6 +3,7 @@ using OpenTK.Graphics;
 using OpenTK.Input;
 using OpenTK.MiniProjects.Shared;
 using System;
+using OpenTK.MiniProjects.ShipEngine;
 using OpenTK.Objects;
 
 namespace OpenTK.MiniProjects.FlyingShip
@@ -21,7 +22,7 @@ namespace OpenTK.MiniProjects.FlyingShip
 
 		public override void Init()
 		{
-			Ship = new Ship(new Vector3(0, 0, 0), new Vector3(0, 0, -0.01f), Environment, R);
+			Ship = new Ship(new Vector3(0, 0, 0), new Vector3(0, 0, 0), Environment, R);
 			Ship.Init();
 
 			Environment.AddWorldObject(Ship);
@@ -50,6 +51,56 @@ namespace OpenTK.MiniProjects.FlyingShip
 			Environment.Render();
 
 			gw.SwapBuffers();
+		}
+
+		public override void OnKeyDown(KeyboardKeyEventArgs keyboardKeyEventArgs, GameWindow game)
+		{
+			switch (keyboardKeyEventArgs.Key)
+			{
+				case Key.W:
+					Ship.BeginManeuver(Maneuvering.Flight.Forward);
+					break;
+				case Key.S:
+					Ship.BeginManeuver(Maneuvering.Flight.Backward);
+					break;
+				case Key.A:
+					Ship.BeginManeuver(Maneuvering.Flight.RollLeft);
+					break;
+				case Key.D:
+					Ship.BeginManeuver(Maneuvering.Flight.RollRight);
+					break;
+				case Key.Z:
+					Ship.BeginManeuver(Maneuvering.Flight.YawLeft);
+					break;
+				case Key.C:
+					Ship.BeginManeuver(Maneuvering.Flight.YawRight);
+					break;
+			}
+		}
+
+		public override void OnKeyUp(KeyboardKeyEventArgs keyboardKeyEventArgs, GameWindow game)
+		{
+			switch (keyboardKeyEventArgs.Key)
+			{
+				case Key.W:
+					Ship.StopMeneuver(Maneuvering.Flight.Forward);
+					break;
+				case Key.S:
+					Ship.StopMeneuver(Maneuvering.Flight.Backward);
+					break;
+				case Key.A:
+					Ship.StopMeneuver(Maneuvering.Flight.RollLeft);
+					break;
+				case Key.D:
+					Ship.StopMeneuver(Maneuvering.Flight.RollRight);
+					break;
+				case Key.Z:
+					Ship.StopMeneuver(Maneuvering.Flight.YawLeft);
+					break;
+				case Key.C:
+					Ship.StopMeneuver(Maneuvering.Flight.YawRight);
+					break;
+			}
 		}
 	}
 
