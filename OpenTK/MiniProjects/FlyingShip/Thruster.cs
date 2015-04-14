@@ -34,11 +34,9 @@ namespace OpenTK.MiniProjects.FlyingShip
 			float yA = (float)(Ship.YawAngle * System.Math.PI / 180);
 			float pA = (float)(Ship.PitchAngle * System.Math.PI / 180);
 
-			var particlePosition = Position;
+			var particlePosition = Ship.Position + Position;
 			particlePosition = Vector3.Transform(particlePosition,
-				Matrix4.CreateRotationX(rA) *
-				Matrix4.CreateRotationZ(pA) *
-				Matrix4.CreateRotationY(yA)
+				Matrix4.CreateRotationZ(rA)
 			);
 			var particle = new Particle(particlePosition, Vector3.UnitZ, Environment);
 			Environment.AddWorldObject(particle);
