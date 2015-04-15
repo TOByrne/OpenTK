@@ -24,6 +24,7 @@ namespace OpenTK.MiniProjects.FlyingShip
 		public Vector3 Orientation { get; set; }
 		public Vector3 Position { get; set; }
 		public Vector3 Velocity { get; set; }
+		public bool Dead { get { return false; } }
 		public Ship Ship { get; set; }
 
 

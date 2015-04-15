@@ -108,6 +108,13 @@ namespace OpenTK.MiniProjects.FlyingShip
 	{
 		public Vector3 Position { get; set; }
 		public Vector3 Velocity { get; set; }
+		public bool Dead { get { return false; } }
+
+		public Engine(Vector3 position, Vector3 velocity)
+		{
+			Position = position;
+			Velocity = velocity;
+		}
 
 		public void Draw()
 		{

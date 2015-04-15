@@ -20,6 +20,7 @@ namespace OpenTK.MiniProjects.Shared
 		{
 			if (WorldObjects != null)
 			{
+				WorldObjects.RemoveAll(o => o.Dead);
 				WorldObjects.ForEach(o => o.Draw());
 			}
 		}

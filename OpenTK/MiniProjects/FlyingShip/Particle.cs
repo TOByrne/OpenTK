@@ -10,6 +10,7 @@ namespace OpenTK.MiniProjects.FlyingShip
 		Random R { get; set; }
 		public Vector3 Position { get; set; }
 		public Vector3 Velocity { get; set; }
+		public bool Dead { get { return Position.Length > 10; } }
 		GameEnvironment Environment { get; set; }
 
 		public Particle(Vector3 position, Vector3 direction, GameEnvironment environment, Random r = null)
