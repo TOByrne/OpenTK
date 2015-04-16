@@ -69,10 +69,10 @@ namespace OpenTK.MiniProjects.FlyingShip
 				case Key.D:
 					Ship.BeginManeuver(Maneuvering.Flight.RollRight);
 					break;
-				case Key.Z:
+				case Key.Q:
 					Ship.BeginManeuver(Maneuvering.Flight.YawLeft);
 					break;
-				case Key.C:
+				case Key.E:
 					Ship.BeginManeuver(Maneuvering.Flight.YawRight);
 					break;
 			}
@@ -94,10 +94,10 @@ namespace OpenTK.MiniProjects.FlyingShip
 				case Key.D:
 					Ship.StopMeneuver(Maneuvering.Flight.RollRight);
 					break;
-				case Key.Z:
+				case Key.Q:
 					Ship.StopMeneuver(Maneuvering.Flight.YawLeft);
 					break;
-				case Key.C:
+				case Key.E:
 					Ship.StopMeneuver(Maneuvering.Flight.YawRight);
 					break;
 			}

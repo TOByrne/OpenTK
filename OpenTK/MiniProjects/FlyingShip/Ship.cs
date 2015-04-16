@@ -136,10 +136,35 @@ namespace OpenTK.MiniProjects.FlyingShip
 		{
 			Position += Velocity;
 
+			//	Reading about quaternions here:
+			//	http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-17-quaternions/
+
+
+			//Quaternion rot = new Quaternion(
+			//	Vector3.UnitX * (float)(System.Math.Sin(PitchAngle / 2)),
+			//	Vector3.UnitY * (float)(System.Math.Sin(YawAngle / 2)),
+			//	Vector3.UnitZ * (float)(System.Math.Sin(RollAngle / 2)),
+
+			//	What's W?
+
+			//);
+
 			GL.PushMatrix();
 			GL.Translate(Position);
 
-			GL.Rotate(RollAngle, Vector3.UnitZ);
+			var xRot = Matrix3.CreateRotationX(PitchAngle);
+			var yRot = Matrix3.CreateRotationY(YawAngle);
+			var zRot = Matrix3.CreateRotationZ(RollAngle);
+
+			var shipRotation = Matrix4.CreateRotationZ(RollAngle) *
+				Matrix4.CreateRotationY(YawAngle) *
+				Matrix4.CreateRotationX(PitchAngle);
+
+
+			//GL.Rotate(RollAngle, Vector3.UnitZ);
+			//GL.Rotate(YawAngle, Vector3.UnitY);
+
+
 
 			GL.Begin(BeginMode.LineStrip);
 
@@ -239,11 +264,13 @@ namespace OpenTK.MiniProjects.FlyingShip
 
 		private void YawLeft()
 		{
+			YawAngle++;
+
 			//	Thrusters at the front and oriented right
 			//	Thrusters at the back and oriented left
 			var thrusters = Thrusters.Where(x =>
-				(x.Location.HasFlag(Thruster.Placement.Front & Thruster.Placement.Right) && x.Orientation == Vector3.UnitX) ||
-				(x.Location.HasFlag(Thruster.Placement.Back & Thruster.Placement.Left) && x.Orientation == (Vector3.UnitX * -1))
+				(x.Location.HasFlag(Thruster.Placement.Front | Thruster.Placement.Right) && x.Orientation == Vector3.UnitX) ||
+				(x.Location.HasFlag(Thruster.Placement.Back | Thruster.Placement.Left) && x.Orientation == (Vector3.UnitX * -1))
 				).ToList();
 
 			thrusters.ForEach(x => x.Fire());
@@ -251,11 +278,13 @@ namespace OpenTK.MiniProjects.FlyingShip
 
 		private void YawRight()
 		{
+			YawAngle--;
+
 			//	Thrusters at the front and oriented left
 			//	Thrusters at the back and oriented right
 			var thrusters = Thrusters.Where(x =>
-				(x.Location.HasFlag(Thruster.Placement.Front & Thruster.Placement.Left) && x.Orientation == Vector3.UnitX) ||
-				(x.Location.HasFlag(Thruster.Placement.Back & Thruster.Placement.Right) && x.Orientation == (Vector3.UnitX * -1))
+				(x.Location.HasFlag(Thruster.Placement.Front | Thruster.Placement.Left) && x.Orientation == Vector3.UnitX * -1) ||
+				(x.Location.HasFlag(Thruster.Placement.Back | Thruster.Placement.Right) && x.Orientation == (Vector3.UnitX))
 				).ToList();
 
 			thrusters.ForEach(x => x.Fire());

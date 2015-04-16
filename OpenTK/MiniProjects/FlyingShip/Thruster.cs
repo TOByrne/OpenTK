@@ -10,13 +10,13 @@ namespace OpenTK.MiniProjects.FlyingShip
 		[Flags]
 		public enum Placement
 		{
-			None = 0x0001,
-			Front = 0x0002,
-			Back = 0x0004,
-			Left = 0x0008,
-			Right = 0x0016,
-			Top = 0x0032,
-			Bottom = 0x0064
+			None = 1,
+			Front = 2,
+			Back = 4,
+			Left = 8,
+			Right = 16,
+			Top = 32,
+			Bottom = 64
 		};
 		public Placement Location { get; set; }
 
