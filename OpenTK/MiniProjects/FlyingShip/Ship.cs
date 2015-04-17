@@ -138,16 +138,13 @@ namespace OpenTK.MiniProjects.FlyingShip
 
 			//	Reading about quaternions here:
 			//	http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-17-quaternions/
+			//
+			//	And here:
+			//	http://content.gpwiki.org/index.php/OpenGL%3aTutorials%3aUsing_Quaternions_to_represent_rotation
 
 
-			//Quaternion rot = new Quaternion(
-			//	Vector3.UnitX * (float)(System.Math.Sin(PitchAngle / 2)),
-			//	Vector3.UnitY * (float)(System.Math.Sin(YawAngle / 2)),
-			//	Vector3.UnitZ * (float)(System.Math.Sin(RollAngle / 2)),
+			//Quaternion rot = new Quaternion();
 
-			//	What's W?
-
-			//);
 
 			GL.PushMatrix();
 			GL.Translate(Position);
